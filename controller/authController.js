@@ -43,7 +43,7 @@ async function login(req, res) {
           // header
           res.cookie("jwt", token, { httpOnly: true });
           return res.status(200).json({
-            status: "userLogged In", token
+            status: "userLogged In", token, user
           });
         } else {
           throw new Error("email or password didn't match ");

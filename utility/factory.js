@@ -2,7 +2,7 @@ const QueryHelper = require("../utility/utilityfn");
 const ErrorExtender = require("../utility/ErrorExtender");
 // 1.
 module.exports.createElement = function (ElementModel) {
-  return async function create(req, res) {
+  return async function create(req, res, next) {
     const recievedElement = req.body;
     try {
       let createdElement = await ElementModel.create(recievedElement);
@@ -91,7 +91,7 @@ module.exports.updateElement = function (ElementModel) {
       });
     } catch (err) {
       console.log(err);
-      next(new Error("Element could not be updated"));
+      // next(new Error("Element could not be updated"));
       return;
     }
   };

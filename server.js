@@ -9,9 +9,16 @@ const viewRouter = require("./router/viewRouter");
 const reviewRouter = require("./router/reviewRouter");
 const bookingRouter = require("./router/bookingRouter");
 const errorExtender = require("./utility/ErrorExtender");
-const globalErrorHandler=require("./utility/globalErrorHandler")
+const globalErrorHandler = require("./utility/globalErrorHandler")
+var cors = require('cors');
+const { gettop3 } = require("./controller/planController");
+const { top3reviews, getPlanReviews } = require("./controller/reviewController");
+
 // global object => heroku => set variable ||dev
 // 
+
+app.use(cors())
+
 process.env.NODE_ENV = process.env.NODE_ENV || "production";
 // 1.middleware
 // app.use(function f1(req, res, next) {
@@ -31,8 +38,11 @@ app.set("views", path.join(__dirname, "view"));
 // /plans
 
 app.use("/api/reviews", reviewRouter);
+app.get("/api/getReview/:id", getPlanReviews)
 app.use("/api/bookings", bookingRouter);
 app.use("/api/plans", planRouter);
+app.get("/api/gettop3", gettop3);
+app.get("/api/top3reviews", top3reviews);
 app.use("/api/users", userRouter);
 app.use("/", viewRouter);
 // wildcard 

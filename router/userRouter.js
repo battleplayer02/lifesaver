@@ -1,6 +1,6 @@
 const userRouter = require("express").Router();
 const { signup, login, protectRoute, isAuthorized, forgetPassword, resetPassword } = require("../controller/authController");
-const { getUser, getAllUser, updateProfileImage, deleteUser } = require("../controller/userController");
+const { getUser, getAllUser, updateProfileImage, deleteUser, updateUser } = require("../controller/userController");
 const multer = require("multer");
 // single file upload
 // const sharp = require("sharp");
@@ -18,10 +18,9 @@ const multer = require("multer");
 //   .get(getAllUser)
 //   .post(checkbody, createUser);
 
-// userRouter
-//   .route("/:id")
-//   .get(getUser)
-//   .patch(updateUser)
+userRouter
+  .route("/:id")
+  .patch(updateUser)
 //   .delete(deleteUser);
 // /////////////////////DB//////////////////////
 
@@ -53,8 +52,8 @@ userRouter.patch("/ProfileImage", upload.single("photo"), protectRoute, updatePr
 
 userRouter.post("/signup", signup);
 userRouter.post("/login", login);
-userRouter.patch("/forgetPassword",  forgetPassword)
-userRouter.patch("/resetPassword/:token",resetPassword)
+userRouter.patch("/forgetPassword", forgetPassword)
+userRouter.patch("/resetPassword/:token", resetPassword)
 // profile page 
 userRouter.use(protectRoute)
 userRouter.get("/userProfile", getUser);
