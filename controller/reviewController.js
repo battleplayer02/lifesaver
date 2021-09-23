@@ -3,6 +3,27 @@ const reviewModel = require("../model/reviewModel");
 const factory = require("../utility/factory");
 
 // // createReview, getAllReviews, getReview , update review ,delete review=> db work  
+module.exports.deleteReviewww = async (req, res) => {
+    try {
+        const review = await reviewModel.findByIdAndDelete(req.body.id);
+        console.log(review);
+        if (!review) {
+            return res.status(404).json({
+                status: 404,
+                message: "Review not found"
+            });
+        }
+        return res.status(200).json({
+            status: 200,
+            message: "Review deleted successfully"
+        });
+    } catch (error) {
+        return res.status(500).json({
+            status: 500,
+            message: "Internal server error"
+        });
+    }
+};
 
 module.exports.createReview = async function createReview(req, res) {
     try {
@@ -100,5 +121,5 @@ module.exports.rateAReview = async (req, res) => {
 module.exports.getReview = factory.getElement(reviewModel);
 module.exports.getAllReviews = factory.getAllElement(reviewModel);
 module.exports.updateReview = factory.updateElement(reviewModel);
-module.exports.deleteReview = factory.deleteElement(reviewModel);
+// module.exports.c = factory.deleteElement(reviewModel);
 // module.exports.createReview = factory.createElement(reviewModel);
