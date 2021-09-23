@@ -1,6 +1,7 @@
 const newPlanModel = require("../model/planModel");
 const reviewModel = require("../model/reviewModel");
 const factory = require("../utility/factory");
+const { updatePlan } = require("./planController");
 
 // // createReview, getAllReviews, getReview , update review ,delete review=> db work  
 module.exports.deleteReviewww = async (req, res) => {
@@ -28,13 +29,9 @@ module.exports.deleteReviewww = async (req, res) => {
 module.exports.createReview = async function createReview(req, res) {
     try {
         const id = req.body.plan;
-        let plan = await newPlanModel.find({
-            where: {
-                _id: id
-            }
-        });
+        let plan = await newPlanModel.findById(id);
         plan.ratingsAverage = (plan.ratingsAverage + req.body.rating) / 2;
-        await plan.save();
+        updatePlan(newPlanModel);
         const review = await reviewModel.create(req.body);
         res.status(201).json({
             review
