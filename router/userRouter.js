@@ -17,13 +17,10 @@ const multer = require("multer");
 //   .route("")
 //   .get(getAllUser)
 //   .post(checkbody, createUser);
-
 userRouter
   .route("/:id")
   .patch(updateUser)
-//   .delete(deleteUser);
-// /////////////////////DB//////////////////////
-
+  .delete(deleteUser);
 const filter = function (req, file, cb) {
   if (file.mimetype.startsWith("image")) {
     cb(null, true)
